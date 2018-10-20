@@ -10,4 +10,5 @@ Soon
 
 ### How to play
 Plane moviment: W,A,S,D/Arrows
+
 Shooting: Space bar
