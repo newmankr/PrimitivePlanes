@@ -9,18 +9,18 @@
   <strong>Primitive Planes</strong> is a processing game using javascript that aims to bring Calculus primitives problems to a fun and challenging airplane gameplay. Your objective is to destroy the maximum amount of primitives to reach a new level. 
 </p>
 
-## How to play
+## 🎮 How to play
 
 Command| Does
 :-----:|:-----:
 `w,a,s,d`|Move the airplane
 `space`|Shoot
 
-## Credits
+## 📌 Credits
 
 Library:
 
 * [P5.js](https://p5js.org/)
 
-## License
+## 📜 License
 Usage is provided under the [MIT License](http://http//opensource.org/licenses/mit-license.php). See LICENSE for the full details.
