@@ -1,22 +1,25 @@
-var character = { x: 250, y: 300};
+var airplane;
 
 function setup() {
-  createCanvas(800,500);
+    createCanvas(windowWidth, windowHeight);
+    airplane = new Airplane();
 }
 
 function draw() {
-  //drawing the scenario
-  background(40);
-  ellipse(character.x, character.y, 80, 80);
+    background(0);
+    airplane.control();
+}
 
-  //using the keyboard to control the character
-  if (keyIsDown(LEFT_ARROW) || keyIsDown(65)){
-    character.x-=10;
-  } else if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)){
-    character.x+=10;
-  } else if (keyIsDown(UP_ARROW) || keyIsDown(87)){
-    character.y-=10;
-  } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)){
-    character.y+=10;
-  }
+function Airplane() {
+    this.control = function () {
+        if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
+            this.pos.x -= 5;
+        } else if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
+            this.pos.x += 5;
+        } else if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
+            this.pos.y -= 5;
+        } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
+            this.pos.y += 5;
+        }
+    }
 }
