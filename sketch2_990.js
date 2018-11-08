@@ -108,7 +108,7 @@ function Bullet(airplanepos) {
 
 function Foreground() {
   textSize(20);
-  text(life, 10, 30);
+  text(life, 10, 60);
   fill(255);
 }
 
