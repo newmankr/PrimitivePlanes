@@ -25,6 +25,7 @@ Library:
 Assets:
 
 * [Kenney](https://kenney.nl/)
+* [MGG](www.mobilegamegraphics.com)
 
 ## 📜 License
 Usage is provided under the [MIT License](http://http//opensource.org/licenses/mit-license.php). See LICENSE for the full details.
