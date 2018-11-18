@@ -1,55 +1,90 @@
+/*E4 - Fazer o jogador realizar disparos ou arremessos de objetos.*/
+
 var bullets = [];
+var airplane;
+var airplaneLoad;
+var bulletLoad;
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
-    frameRate(30);
-    airplane = new Airplane();
+  createCanvas(windowWidth, windowHeight);
+  frameRate(30);
+  //Carregando as imagens do avião e da munição
+  airplaneLoad = loadImage("images/airplane/airplane1.png");
+  bulletLoad = loadImage("images/airplane/bullet1.png");
+
+  airplane = new Airplane();
 }
 
 function draw() {
-    background(0);
-    airplane.render();
-    airplane.control();
+  background(3, 169, 244);
+  airplane.render();
+  airplane.control();
 
-    for (var i = 0; i < bullets.length; i++) {
-        bullets[i].render();
-        bullets[i].movement();
-    }
+  //Chamando a classe de acordo com o tamanho do vetor
+  for (let i = 0; i < bullets.length; i++) {
+    bullets[i].render();
+    bullets[i].movement();
+    bullets[i].edges();
+  }
 }
 
-function Airplane() {
-    this.pos = createVector(200, 150);
-    this.heading = 0;
+class Airplane {
+  constructor() {
+    this.x = 200;
+    this.y = 150;
+  }
 
-    this.render = function () {
-        push();
-        noStroke();
-        ellipse(this.pos.x, this.pos.y, 80, 80);
-        pop();
+  render() {
+    push();
+    image(airplaneLoad, this.x - 200, this.y - 102);
+    tint(255);
+    pop();
+  }
+
+  control() {
+    if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
+      this.x -= 20;
+    } else if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
+      this.x += 20;
+    } else if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
+      this.y -= 20;
+    } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
+      this.y += 20;
     }
+  }
+}
+//Bullet é o objeto a ser arremessado
+class Bullet {
+  constructor(airplaneposx, airplaneposy, bulletLoad) {
+    this.x = airplaneposx;
+    this.y = airplaneposy;
+    this.bulletLoad = bulletLoad;
+  }
+  //Renderização da munição na posição do avião
+  render() {
+    push();
+    image(this.bulletLoad, this.x, this.y, 16, 4);
+    pop();
+  }
+  //Movimentação da munição sempre para a direita
+  movement() {
+    for (let i = 0; i < 10; i++) {
+      this.x += 10;
+    }
+  }
+  //Limites do cenário
+  edges() {
+    if (this.x > windowWidth) {
+      bullets.pop();
+    }
+  }
 }
 
-function Bullet(apos) {
-    this.pos = createVector(apos.x, apos.y);
-
-    this.render = function () {
-        push();
-        stroke(255);
-        strokeWeight(3);
-        point(this.pos.x, this.pos.y);
-        pop();
-    }
-    //Movimentação para a direita
-    this.movement = function () {
-        for (i = 0; i < 10; i++) {
-            this.pos.x++;
-        }
-    }
-}
 //Ao pressionar espaço, é lançada a bala
 function keyPressed() {
-    if (key == ' ') {
-        //Posição da bala de acordo com a posição do avião
-        bullets.push(new Bullet(airplane.pos));
-    }
+  if (key == " ") {
+    //Os argumentos a serem passados são:
+    //A posição do avião(x,y) e a função que carrega a imagem
+    bullets.push(new Bullet(airplane.x, airplane.y, bulletLoad));
+  }
 }

@@ -1,36 +1,39 @@
+var cont = 1;
+var cloud = [];
+var life = ["❤", "❤", "❤", "❤", "❤", "❤", "❤", "❤", "❤", "❤"];
+
 function Foreground() {
   textSize(20);
   text(life, 10, 30);
   fill(255);
 }
 
-function Cloud() {
-  this.posx = Math.random() * (windowWidth + 200);
-  this.posy = Math.random() * 500;
+class Cloud {
+  constructor() {
+    this.x = Math.random() * (windowWidth + 200);
+    this.y = Math.random() * 500;
+  }
 
-  this.render = function() {
+  render() {
     push();
-    image(cloudLoad[cont], this.posx, this.posy);
+    image(cloudLoad[cont], this.x, this.y);
     tint(255, 126);
     cont++;
     if (cont >= 8) {
       cont = 1;
     }
     pop();
-  };
+  }
 
-  this.movement = function() {
+  movement() {
     for (let i = 0; i < 10; i++) {
-      this.posx -= 3;
+      this.x -= 3;
     }
-  };
+  }
 
-  this.edges = function() {
-    if (this.posx < -300) {
-      this.posx = random(windowWidth + 100, windowWidth + 600);
+  edges() {
+    if (this.x < -300) {
+      this.x = random(windowWidth + 100, windowWidth + 600);
     }
-    if (this.posx == bullets.posx && this.posy == bullets.posy) {
-      this.posx = windowWidth + 100;
-    }
-  };
+  }
 }

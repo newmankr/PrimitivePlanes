@@ -1,12 +1,6 @@
-var airplane;
-var primitives = [];
-var bullets = [];
 var cloudLoad = [];
 var airplaneLoad;
 var bulletLoad;
-var cloud = [];
-var cont = 1;
-var life = ["❤", "❤", "❤", "❤", "❤", "❤", "❤", "❤", "❤", "❤"];
 var hit = false;
 
 function preload() {
@@ -25,10 +19,10 @@ function setup() {
     primitives.push(new Primitive());
   }
 
-  for (let k = 0; k < 5; k++) {
+  for (let i = 0; i < 5; i++) {
     cloud.push(new Cloud());
   }
-  collideDebug(true);
+
   airplane = new Airplane();
 }
 
@@ -37,16 +31,16 @@ function draw() {
 
   Foreground();
 
-  for (let k = 0; k < cloud.length; k++) {
-    cloud[k].render();
-    cloud[k].movement();
-    cloud[k].edges();
+  for (let i = 0; i < cloud.length; i++) {
+    cloud[i].render();
+    cloud[i].movement();
+    cloud[i].edges();
   }
 
   airplane.render();
   airplane.control();
 
-  if (primitives.length === 0) {
+  if (primitives.length == 0) {
     primitives.push(new Primitive());
   }
 
@@ -54,23 +48,26 @@ function draw() {
     primitives[i].render();
     primitives[i].movement();
     primitives[i].edges();
-
-    if (pposx <= -90) {
-      life.pop();
-    }
   }
 
-  for (let j = 0; j < bullets.length; j++) {
-    bullets[j].render();
-    bullets[j].movement();
-    bullets[j].edges();
-    bullets[j].hits();
+  for (let i = 0; i < bullets.length; i++) {
+    bullets[i].render();
+    bullets[i].movement();
+    bullets[i].hits();
+    bullets[i].edges();
   }
 }
 
 function keyPressed() {
   if (key == " ") {
-    bullets.push(new Bullet(aposx, aposy));
+    bullets.push(
+      new Bullet(
+        airplane.x,
+        airplane.y,
+        bulletLoad,
+        primitives[0].x,
+        primitives[0].y
+      )
+    );
   }
-  return false;
 }
