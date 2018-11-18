@@ -1,7 +1,9 @@
 var airplane;
-var primitive = [];
-var bullet = [];
+var primitives = [];
+var bullets = [];
 var cloudLoad = [];
+var airplaneLoad;
+var bulletLoad;
 var cloud = [];
 var cont = 1;
 var life = ["❤", "❤", "❤", "❤", "❤", "❤", "❤", "❤", "❤", "❤"];
@@ -11,28 +13,28 @@ function preload() {
   for (let i = 1; i < 9; i++) {
     cloudLoad[i] = loadImage("images/clouds/cloud" + i + ".png");
   }
+  airplaneLoad = loadImage("images/airplane/airplane1.png");
+  bulletLoad = loadImage("images/airplane/bullet1.png");
 }
 
 function setup() {
   createCanvas(windowWidth - 5, windowHeight - 5);
-  frameRate(60);
-  airplane = new Airplane();
+  frameRate(30);
 
   for (let i = 0; i < 1; i++) {
-    primitive.push(new Primitive());
+    primitives.push(new Primitive());
   }
 
-  for (let i = 0; i < 5; i++) {
+  for (let k = 0; k < 5; k++) {
     cloud.push(new Cloud());
   }
   collideDebug(true);
+  airplane = new Airplane();
 }
 
 function draw() {
   background(3, 169, 244);
 
-  airplane.render();
-  airplane.control();
   Foreground();
 
   for (let k = 0; k < cloud.length; k++) {
@@ -41,31 +43,34 @@ function draw() {
     cloud[k].edges();
   }
 
-  for (let i = 0; i < primitive.length; i++) {
-    primitive[i].render();
-    primitive[i].movement();
-    primitive[i].edges();
+  airplane.render();
+  airplane.control();
+
+  if (primitives.length === 0) {
+    primitives.push(new Primitive());
+  }
+
+  for (let i = 0; i < primitives.length; i++) {
+    primitives[i].render();
+    primitives[i].movement();
+    primitives[i].edges();
 
     if (pposx <= -90) {
       life.pop();
     }
   }
 
-  for (let j = 0; j < bullet.length; j++) {
-    bullet[j].render();
-    bullet[j].movement();
-  }
-
-  hit = collidePointRect(bposx, bposy, pposx, pposy, 50, 50);
-
-  if (hit) {
-    primitive.pop();
+  for (let j = 0; j < bullets.length; j++) {
+    bullets[j].render();
+    bullets[j].movement();
+    bullets[j].edges();
+    bullets[j].hits();
   }
 }
 
 function keyPressed() {
   if (key == " ") {
-    bullet.push(new Bullet(aposx, aposy));
+    bullets.push(new Bullet(aposx, aposy));
   }
   return false;
 }

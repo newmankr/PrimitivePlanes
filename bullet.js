@@ -1,31 +1,40 @@
-bposx = 0;
-bposy = 0;
-
 function Bullet(aposx, aposy) {
-  bposx = aposx;
-  bposy = aposy;
+  this.bposx = aposx;
+  this.bposy = aposy;
 
   this.render = function() {
     push();
-    stroke(255);
-    strokeWeight(3);
-    point(bposx, bposy);
+    image(bulletLoad, this.bposx, this.bposy, 16, 4);
     pop();
   };
 
   this.movement = function() {
     for (let i = 0; i < 10; i++) {
-      bposx += 10;
+      this.bposx += 10;
     }
   };
 
-  this.hits = function(primitive) {
-    var d = dist(bposx, bposy, primitive.posx, primitive.posy);
+  this.edges = function() {
+    if (this.bposx > windowWidth) {
+      bullets.pop();
+    }
 
-    if (d < this.r + primitive.r) {
-      return true;
-    } else {
-      return false;
+    /*hit = collidePointRect(this.bposx, this.bposy, pposx, pposy, 50, 50);
+
+    if (hit) {
+      primitives.pop();
+      pposx = windowWidth + 200;
+      pposy = Math.random() * 500;
+    }*/
+  };
+
+  this.hits = function() {
+    hit = collidePointRect(this.bposx, this.bposy, pposx, pposy, 50, 50);
+
+    if (hit) {
+      primitives.pop();
+      pposx = windowWidth + 200;
+      pposy = Math.random() * 500;
     }
   };
 }

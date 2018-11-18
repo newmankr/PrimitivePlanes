@@ -1,10 +1,9 @@
-pposx = 900;
+pposx = 1300;
 pposy = Math.random() * 500;
 
 function Primitive() {
-  this.posx = windowWidth + 100;
-  this.posy = Math.random() * 500;
-  this.r = createVector(pposx + 10, pposy + 10);
+  //this.posx = windowWidth + 100;
+  //this.posy = Math.random() * 500;
 
   this.render = function() {
     rect(pposx, pposy, 50, 50);
@@ -18,7 +17,9 @@ function Primitive() {
 
   this.edges = function() {
     if (pposx < -100) {
-      pposx = windowWidth + 100;
+      primitives.pop();
+      pposx = windowWidth + 200;
+      pposy = Math.random() * 500;
     }
   };
 }
