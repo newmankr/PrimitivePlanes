@@ -5,11 +5,11 @@ var fontBold;
 
 function preload() {
   for (let i = 1; i < 9; i++) {
-    cloudLoad[i] = loadImage("assets/images/clouds/cloud" + i + ".png");
+    cloudLoad[i] = loadImage("images/clouds/cloud" + i + ".png");
   }
-  airplaneLoad = loadImage("assets/images/airplane/airplane1.png");
-  bulletLoad = loadImage("assets/images/airplane/bullet1.png");
-  fontBold = loadFont("assets/RifficFree-Bold.ttf");
+  airplaneLoad = loadImage("images/airplane/airplane1.png");
+  bulletLoad = loadImage("images/airplane/bullet1.png");
+  fontBold = loadFont("fonts/RifficFree-Bold.ttf");
 }
 
 function setup() {
