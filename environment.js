@@ -1,11 +1,22 @@
 var cont = 1;
 var cloud = [];
-var life = ["❤", "❤", "❤", "❤", "❤", "❤", "❤", "❤", "❤", "❤"];
+var life = ["❤", "❤", "❤", "❤", "❤"];
+var score = 0;
 
 function Foreground() {
+  push();
+  //Life
   textSize(20);
-  text(life, 10, 30);
+  text(life.join(" "), 10, 30);
   fill(255);
+
+  //Primitive selector
+  text(prim[selectedPrimitive], width / 2, 30);
+
+  //Score
+  textFont(fontBold);
+  text(`Score: ${score}`, windowWidth - 150, 30);
+  pop();
 }
 
 class Cloud {
@@ -16,7 +27,7 @@ class Cloud {
 
   render() {
     push();
-    image(cloudLoad[cont], this.x, this.y);
+    image(cloudLoad[2], this.x, this.y);
     tint(255, 126);
     cont++;
     if (cont >= 8) {

@@ -1,21 +1,22 @@
-var cloudLoad = [];
-var airplaneLoad;
-var bulletLoad;
-var hit = false;
+var cloudLoad = [],
+  airplaneLoad,
+  bulletLoad;
+var fontBold;
 
 function preload() {
   for (let i = 1; i < 9; i++) {
-    cloudLoad[i] = loadImage("images/clouds/cloud" + i + ".png");
+    cloudLoad[i] = loadImage("assets/images/clouds/cloud" + i + ".png");
   }
-  airplaneLoad = loadImage("images/airplane/airplane1.png");
-  bulletLoad = loadImage("images/airplane/bullet1.png");
+  airplaneLoad = loadImage("assets/images/airplane/airplane1.png");
+  bulletLoad = loadImage("assets/images/airplane/bullet1.png");
+  fontBold = loadFont("assets/RifficFree-Bold.ttf");
 }
 
 function setup() {
   createCanvas(windowWidth - 5, windowHeight - 5);
   frameRate(30);
 
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 3; i++) {
     primitives.push(new Primitive());
   }
 
@@ -61,13 +62,7 @@ function draw() {
 function keyPressed() {
   if (key == " ") {
     bullets.push(
-      new Bullet(
-        airplane.x,
-        airplane.y,
-        bulletLoad,
-        primitives[0].x,
-        primitives[0].y
-      )
+      new Bullet(airplane.x, airplane.y, primitives[0].x, primitives[0].y)
     );
   }
 }

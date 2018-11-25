@@ -1,17 +1,17 @@
 var bullets = [];
+var hit = false;
 
 class Bullet {
-  constructor(aposx, aposy, bulletLoad, pposx, pposy) {
+  constructor(aposx, aposy, pposx, pposy) {
     this.x = aposx;
     this.y = aposy;
-    this.bulletLoad = bulletLoad;
     this.px = pposx;
     this.py = pposy;
   }
 
   render() {
     push();
-    image(this.bulletLoad, this.x, this.y, 16, 4);
+    image(bulletLoad, this.x, this.y, 16, 4);
     pop();
   }
 
@@ -32,6 +32,7 @@ class Bullet {
 
     if (this.hit) {
       primitives.pop();
+      score += 100;
       this.px = windowWidth + 200;
       this.py = Math.random() * 500;
     }
