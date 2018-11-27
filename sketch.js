@@ -1,27 +1,22 @@
-var cloudLoad = [],
-  airplaneLoad,
-  bulletLoad;
+var backgroundLoad;
+var airplaneLoad;
+var bulletLoad;
 var fontBold;
 
 function preload() {
-  for (let i = 1; i < 9; i++) {
-    cloudLoad[i] = loadImage("images/clouds/cloud" + i + ".png");
-  }
+  backgroundLoad = loadImage("images/background.png")
   airplaneLoad = loadImage("images/airplane/airplane1.png");
   bulletLoad = loadImage("images/airplane/bullet1.png");
   fontBold = loadFont("fonts/RifficFree-Bold.ttf");
 }
 
 function setup() {
-  createCanvas(windowWidth - 5, windowHeight - 5);
+  createCanvas(windowWidth, windowHeight);
   frameRate(30);
+  deviceOrientation = 'landscape';
 
   for (let i = 0; i < 3; i++) {
     primitives.push(new Primitive());
-  }
-
-  for (let i = 0; i < 5; i++) {
-    cloud.push(new Cloud());
   }
 
   airplane = new Airplane();
@@ -31,12 +26,6 @@ function draw() {
   background(3, 169, 244);
 
   Foreground();
-
-  for (let i = 0; i < cloud.length; i++) {
-    cloud[i].render();
-    cloud[i].movement();
-    cloud[i].edges();
-  }
 
   airplane.render();
   airplane.control();
@@ -65,4 +54,10 @@ function keyPressed() {
       new Bullet(airplane.x, airplane.y, primitives[0].x, primitives[0].y)
     );
   }
+}
+
+function touchStarted(){
+  bullets.push(
+    new Bullet(airplane.x, airplane.y, primitives[0].x, primitives[0].y)
+  );
 }
