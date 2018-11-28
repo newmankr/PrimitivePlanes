@@ -4,10 +4,11 @@ var ans = ["tan(x)", "ln(x)", "-cos(x)", "sin(x)", "e^x"];
 var selectedPrimitive = parseInt(Math.random() * prim.length);
 
 class Primitive {
-  constructor() {
-    this.x = windowWidth + Math.random() * 400;
+  constructor(i) {
+    this.x = width + Math.random() * 400;
     this.y = Math.random() * 500;
     this.selectedA = parseInt(Math.random() * ans.length);
+    this.i = i;
   }
 
   render() {
@@ -20,15 +21,13 @@ class Primitive {
   }
 
   movement() {
-    for (let i = 0; i < 10; i++) {
-      this.x-= 0.5;
-    }
+    this.x -= 10;
   }
 
   edges() {
     if (this.x < -100) {
       ans.splice(this.selectedA, 1);
-      primitives.pop();
+      primitives.splice(this.i, 1);
       life.pop();
     }
   }
