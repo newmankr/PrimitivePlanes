@@ -26,9 +26,6 @@ function Foreground() {
   text(life.join(" "), 10, 30);
   fill(255);
 
-  //Primitive selector
-  text(prim[selectedPrimitive], width / 2, 30);
-
   //Score
   textFont(fontBold);
   text(`Score: ${score}`, width - 150, 30);

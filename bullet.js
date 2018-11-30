@@ -2,11 +2,9 @@ var bullets = [];
 var hit = false;
 
 class Bullet {
-  constructor(aposx, aposy, pposx, pposy) {
-    this.x = aposx;
-    this.y = aposy;
-    this.px = pposx;
-    this.py = pposy;
+  constructor(aposx, aposy) {
+    this.x = aposx + 200;
+    this.y = aposy + 100;
   }
 
   render() {
@@ -16,25 +14,13 @@ class Bullet {
   }
 
   movement() {
-    for (let i = 0; i < 10; i++) {
-      this.x += 10;
-    }
+    this.x += 120;
   }
 
-  edges() {
-    if (this.x > windowWidth) {
+  edges(primitive) {
+    /*if (this.x > windowWidth) {
       bullets.pop();
-    }
-  }
-
-  hits() {
-    this.hit = collidePointRect(this.x, this.y, this.px, this.py, 50, 50);
-
-    if (this.hit) {
-      primitives.pop();
-      score += 100;
-      this.px = windowWidth + 200;
-      this.py = Math.random() * 500;
-    }
+    }*/
+    return collidePointRect(this.x, this.y, primitive.x, primitive.y, 50, 50);
   }
 }

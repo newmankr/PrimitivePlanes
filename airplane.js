@@ -8,7 +8,7 @@ class Airplane {
 
   render() {
     push();
-    image(airplaneLoad, this.x - 200, this.y - 102);
+    image(airplaneLoad, this.x, this.y);
     tint(255);
     pop();
   }

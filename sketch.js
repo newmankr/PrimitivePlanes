@@ -12,11 +12,11 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1200, 600);
+  collideDebug(true);
+  createCanvas(windowWidth, windowHeight);
   frameRate(30);
-  deviceOrientation = "landscape";
-  screen = 1;
-  for (let i = 0; i < 3; i++) {
+  screen = 2;
+  for (let i = 0; i < 5; i++) {
     primitives.push(new Primitive());
   }
 
@@ -45,7 +45,7 @@ function draw() {
     screen = 4;
   }
 
-  if (score >= 400) {
+  if (score >= 5000) {
     screen = 3;
   }
 }
@@ -70,24 +70,29 @@ function newLevel() {
   airplane.control();
 
   if (primitives.length == 0) {
-    primitives.push(new Primitive());
+    for (let i = 0; i < 5; i++) {
+      primitives.push(new Primitive());
+    }
   }
 
   for (let i = 0; i < primitives.length; i++) {
-    primitives[i].render();
-    primitives[i].movement();
-
-    if (primitives[i].x < -100) {
-      primitives.splice(i, 1);
-      life.pop();
-    }
+    primitives[i].render(i);
+    primitives[i].movement(i);
+    primitives[i].edges(i);
   }
 
   for (let i = 0; i < bullets.length; i++) {
     bullets[i].render();
     bullets[i].movement();
-    bullets[i].hits();
-    bullets[i].edges();
+
+    for (let j = 0; j < primitives.length; j++) {
+      if (bullets[i].edges(primitives[j])) {
+        score += 100;
+        primitives.splice(j, 1);
+        bullets.splice(i, 1);
+        break;
+      }
+    }
   }
 }
 
@@ -97,7 +102,7 @@ function win() {
   fill(255);
   textFont(fontBold);
   textSize(64);
-  text("YOU WIN!", 400, 250);
+  text("YOU WON!", 400, 250);
   text(`Score: ${score}`, 400, 350);
   textSize(32);
   text("Press ENTER to play again!", 360, 450);
@@ -123,9 +128,7 @@ function reset() {
 
 function keyPressed() {
   if (key == " ") {
-    bullets.push(
-      new Bullet(airplane.x, airplane.y, primitives[0].x, primitives[0].y)
-    );
+    bullets.push(new Bullet(airplane.x, airplane.y));
   }
   if (screen == 1 || screen == 3 || screen == 4) {
     if (keyCode == ENTER) {
@@ -133,10 +136,4 @@ function keyPressed() {
       screen = 2;
     }
   }
-}
-
-function touchStarted() {
-  bullets.push(
-    new Bullet(airplane.x, airplane.y, primitives[0].x, primitives[0].y)
-  );
 }
