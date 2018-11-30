@@ -3,8 +3,8 @@ var hit = false;
 
 class Bullet {
   constructor(aposx, aposy) {
-    this.x = aposx + 200;
-    this.y = aposy + 100;
+    this.x = aposx;
+    this.y = aposy - 20;
   }
 
   render() {
@@ -18,9 +18,15 @@ class Bullet {
   }
 
   edges(primitive) {
-    /*if (this.x > windowWidth) {
-      bullets.pop();
-    }*/
-    return collidePointRect(this.x, this.y, primitive.x, primitive.y, 50, 50);
+    return collideRectRect(
+      this.x,
+      this.y,
+      16,
+      4,
+      primitive.x,
+      primitive.y,
+      50,
+      50
+    );
   }
 }

@@ -8,7 +8,7 @@ class Airplane {
 
   render() {
     push();
-    image(airplaneLoad, this.x, this.y);
+    image(airplaneLoad, this.x - 230, this.y - 120);
     tint(255);
     pop();
   }
@@ -23,5 +23,18 @@ class Airplane {
     } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
       this.y += 20;
     }
+  }
+
+  hits(primitive) {
+    return collideRectRect(
+      this.x - 150,
+      this.y - 40,
+      150,
+      80,
+      primitive.x,
+      primitive.y,
+      50,
+      50
+    );
   }
 }

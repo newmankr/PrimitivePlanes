@@ -16,15 +16,22 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(30);
   screen = 2;
-  for (let i = 0; i < 5; i++) {
-    primitives.push(new Primitive());
-  }
-
+  reset();
   airplane = new Airplane();
 }
 
+function reset() {
+  life = ["❤", "❤", "❤", "❤", "❤"];
+  score = 0;
+  primitives = [];
+
+  for (let i = 0; i < 5; i++) {
+    primitives.push(new Primitive());
+  }
+}
+
 function draw() {
-  background(3, 169, 244);
+  background(0);
 
   switch (screen) {
     case 1:
@@ -69,28 +76,41 @@ function newLevel() {
   airplane.render();
   airplane.control();
 
-  if (primitives.length == 0) {
+  for (let i = bullets.length - 1; i >= 0; i--) {
+    if (bullets[i].x > windowWidth) {
+      bullets.splice(i, 1);
+    } else {
+      bullets[i].render();
+      bullets[i].movement();
+
+      for (let j = primitives.length - 1; j >= 0; j--) {
+        if (bullets[i].edges(primitives[j])) {
+          score += 100;
+          primitives.splice(j, 1);
+          bullets.splice(i, 1);
+          break;
+        }
+      }
+    }
+  }
+
+  if (primitives.length == 1) {
     for (let i = 0; i < 5; i++) {
       primitives.push(new Primitive());
     }
   }
 
-  for (let i = 0; i < primitives.length; i++) {
+  for (let i = primitives.length - 1; i >= 0; i--) {
     primitives[i].render(i);
     primitives[i].movement(i);
-    primitives[i].edges(i);
-  }
-
-  for (let i = 0; i < bullets.length; i++) {
-    bullets[i].render();
-    bullets[i].movement();
-
-    for (let j = 0; j < primitives.length; j++) {
-      if (bullets[i].edges(primitives[j])) {
-        score += 100;
+    if (primitives[i].x < -100) {
+      primitives.splice(i, 1);
+      life.pop();
+    }
+    for (let j = primitives.length - 1; j >= 0; j--) {
+      if (airplane.hits(primitives[j])) {
         primitives.splice(j, 1);
-        bullets.splice(i, 1);
-        break;
+        life.pop();
       }
     }
   }
@@ -121,11 +141,6 @@ function gameOver() {
   pop();
 }
 
-function reset() {
-  life = ["❤", "❤", "❤", "❤", "❤"];
-  score = 0;
-}
-
 function keyPressed() {
   if (key == " ") {
     bullets.push(new Bullet(airplane.x, airplane.y));
@@ -135,5 +150,15 @@ function keyPressed() {
       reset();
       screen = 2;
     }
+  }
+}
+
+function touches() {
+  if (screen == 1 || screen == 3 || screen == 4) {
+    reset();
+    screen = 2;
+  }
+  if (screen == 2) {
+    bullets.push(new Bullet(airplane.x, airplane.y));
   }
 }

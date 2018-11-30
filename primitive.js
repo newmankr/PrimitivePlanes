@@ -3,8 +3,8 @@ var pvelocity = 2;
 
 class Primitive {
   constructor() {
-    this.x = width + Math.random() * 400;
-    this.y = Math.random() * 500;
+    this.x = round(width + Math.random() * 400);
+    this.y = round(Math.random() * 500);
   }
 
   render(i) {
