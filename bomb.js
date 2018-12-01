@@ -1,6 +1,6 @@
 var bombs = [];
 var powerups = [];
-var bulletVelocity = 2;
+var bombVelocity = 2;
 
 class Bomb {
   constructor() {
@@ -13,7 +13,7 @@ class Bomb {
   }
 
   movement() {
-    this.x -= bulletVelocity;
+    this.x -= bombVelocity;
   }
 }
 
