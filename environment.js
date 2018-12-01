@@ -23,7 +23,7 @@ function Foreground() {
   }
   //Life
   textSize(20);
-  text(life.join(" "), 10, 30);
+  text(life.join(" "), 75, 30);
   fill(255);
 
   //Score

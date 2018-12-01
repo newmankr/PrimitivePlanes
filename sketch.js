@@ -1,26 +1,40 @@
 var backgroundLoad;
-var mainmenuLoad;
-var gameoverLoad;
+var mainMenuLoad;
+var gameOverLoad;
 var winLoad;
 var airplaneLoad;
+var airplaneAttackLoad = [];
+var bombExplosionLoad = [];
+var lifePowerupLoad;
 var bulletLoad;
 var bombLoad;
 var fontBold;
 var screen;
+var cont = 1;
 
 function preload() {
   backgroundLoad = loadImage("images/background.png");
-  mainmenuLoad = loadImage("images/mainmenu.png");
-  gameoverLoad = loadImage("images/gameover.png");
+  mainMenuLoad = loadImage("images/mainmenu.png");
+  gameOverLoad = loadImage("images/gameover.png");
   winLoad = loadImage("images/win.png");
   airplaneLoad = loadImage("images/airplane.png");
   bulletLoad = loadImage("images/bullet.png");
   bombLoad = loadImage("images/bomb.png");
+  lifePowerupLoad = loadImage("images/animations/Life_power_up.gif");
   fontBold = loadFont("fonts/Rainbow.ttf");
+
+  for (let i = 0; i < 2; i++) {
+    airplaneAttackLoad[i] = loadImage(
+      "images/animations/airplaneattack" + i + ".png"
+    );
+  }
+
+  /*for (let i = 1; i < 16; i++) {
+    bombExplosionLoad[i] = loadImage("images/animations/" + i + ".png");
+  }*/
 }
 
 function setup() {
-  collideDebug(true);
   createCanvas(windowWidth, windowHeight);
   frameRate(30);
   screen = 1;
@@ -32,15 +46,18 @@ function reset() {
   life = ["❤", "❤", "❤", "❤", "❤"];
   score = 0;
   bombs = [];
+  powerups = [];
 
   for (let i = 0; i < 5; i++) {
     bombs.push(new Bomb());
   }
+
+  for (let i = 0; i < 2; i++) {
+    powerups.push(new Powerup());
+  }
 }
 
 function draw() {
-  background(0);
-
   switch (screen) {
     case 1:
       mainMenu();
@@ -61,30 +78,28 @@ function draw() {
   }
 
   if (score >= 1000 && score < 2000) {
-    bvelocity = 3;
+    bulletVelocity = 3;
   } else if (score >= 2000 && score < 3000) {
-    bvelocity = 4;
+    bulletVelocity = 4;
   } else if (score >= 3000 && score < 4000) {
-    bvelocity = 6;
+    bulletVelocity = 6;
   } else if (score >= 4000 && score < 5000) {
-    bvelocity = 10;
+    bulletVelocity = 10;
   } else if (score >= 5000) {
     screen = 3;
   }
 }
 
 function mainMenu() {
-  push();
   screen = 1;
-  background(3, 169, 244);
-  image(mainmenuLoad, 0, 0, windowWidth, windowHeight);
-  pop();
+  image(mainMenuLoad, 0, 0, windowWidth, windowHeight);
 }
 
 function newLevel() {
   Foreground();
 
   airplane.render();
+  airplane.edges();
   airplane.control();
 
   for (let i = bullets.length - 1; i >= 0; i--) {
@@ -98,7 +113,19 @@ function newLevel() {
         if (bullets[i].edges(bombs[j])) {
           score += 100;
           bombs.splice(j, 1);
-          bullets.splice(i, 1);
+          //bullets.splice(i, 1);
+          //banimation(j);
+
+          break;
+        }
+      }
+      console.log(i);
+      for (let j = powerups.length - 1; j >= 0; j--) {
+        if (bullets[i].edges(powerups[j])) {
+          powerups.splice(j, 1);
+          //bullets.splice(i, 1);
+          life.push("❤");
+
           break;
         }
       }
@@ -125,20 +152,31 @@ function newLevel() {
       }
     }
   }
-}
 
+  for (let i = powerups.length - 1; i >= 0; i--) {
+    powerups[i].render();
+    powerups[i].movement();
+    if (powerups[i].x < -100) {
+      powerups.splice(i, 1);
+    }
+  }
+}
+/*
+function banimation(j) {
+  cont++;
+  if (cont >= 16) {
+    cont = 1;
+  }
+  console.log(cont);
+  image(bombExplosionLoad[cont], bombs[j].x, bombs[j].y);
+}
+*/
 function win() {
-  push();
-  background(3, 169, 244);
   image(winLoad, 0, 0, windowWidth, windowHeight);
-  pop();
 }
 
 function gameOver() {
-  push();
-  background(200, 0, 0);
-  image(gameoverLoad, 0, 0, windowWidth, windowHeight);
-  pop();
+  image(gameOverLoad, 0, 0, windowWidth, windowHeight);
 }
 
 function keyPressed() {

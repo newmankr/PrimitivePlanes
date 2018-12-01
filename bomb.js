@@ -1,5 +1,6 @@
 var bombs = [];
-var bvelocity = 2;
+var powerups = [];
+var bulletVelocity = 2;
 
 class Bomb {
   constructor() {
@@ -8,12 +9,25 @@ class Bomb {
   }
 
   render() {
-    push();
     image(bombLoad, this.x, this.y, 90, 35);
-    pop();
   }
 
   movement() {
-    this.x -= bvelocity;
+    this.x -= bulletVelocity;
+  }
+}
+
+class Powerup {
+  constructor() {
+    this.x = round(width + Math.random() * 4000);
+    this.y = round(Math.random() * 500);
+  }
+
+  render() {
+    image(lifePowerupLoad, this.x, this.y, 40, 40);
+  }
+
+  movement() {
+    this.x -= 2;
   }
 }

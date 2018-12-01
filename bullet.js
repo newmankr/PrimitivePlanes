@@ -8,9 +8,7 @@ class Bullet {
   }
 
   render() {
-    push();
     image(bulletLoad, this.x, this.y, 16, 4);
-    pop();
   }
 
   movement() {
@@ -19,5 +17,9 @@ class Bullet {
 
   edges(bomb) {
     return collideRectRect(this.x, this.y, 16, 4, bomb.x, bomb.y, 90, 35);
+  }
+
+  hits(powerup) {
+    return collideRectRect(this.x, this.y, 16, 4, powerup.x, powerup.y, 40, 40);
   }
 }

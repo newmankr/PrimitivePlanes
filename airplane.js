@@ -7,9 +7,12 @@ class Airplane {
   }
 
   render() {
-    push();
     image(airplaneLoad, this.x - 230, this.y - 120);
-    pop();
+    if (keyIsDown(32)) {
+      for (let i = 0; i < 2; i++) {
+        image(airplaneAttackLoad[i], this.x - 230, this.y - 120);
+      }
+    }
   }
 
   control() {
@@ -21,6 +24,16 @@ class Airplane {
       this.y -= 15;
     } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
       this.y += 15;
+    }
+  }
+
+  edges() {
+    if (this.x < 150) {
+      this.x = 150;
+    } else if (this.y < 0) {
+      this.y = 0;
+    } else if (this.y > windowHeight) {
+      this.y = windowHeight;
     }
   }
 
