@@ -1,4 +1,4 @@
-<p align="center"><img width=60% src="https://github.com/newmankr/PrimitivePlanes/blob/master/images/logo.png"></p>
+<p align="center"><img width=60% src="https://github.com/newmankr/PrimitivePlanes/blob/gh-pages/images/logo.png"></p>
 
 <p align="center"> 
 <a href="https://p5js.org/"><img src="https://forthebadge.com/images/badges/made-with-javascript.svg"></a>
