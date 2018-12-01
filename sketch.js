@@ -23,7 +23,7 @@ function setup() {
   collideDebug(true);
   createCanvas(windowWidth, windowHeight);
   frameRate(30);
-  screen = 2;
+  screen = 1;
   reset();
   airplane = new Airplane();
 }
