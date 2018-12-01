@@ -17,16 +17,7 @@ class Bullet {
     this.x += 120;
   }
 
-  edges(primitive) {
-    return collideRectRect(
-      this.x,
-      this.y,
-      16,
-      4,
-      primitive.x,
-      primitive.y,
-      50,
-      50
-    );
+  edges(bomb) {
+    return collideRectRect(this.x, this.y, 16, 4, bomb.x, bomb.y, 90, 35);
   }
 }

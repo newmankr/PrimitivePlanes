@@ -9,32 +9,31 @@ class Airplane {
   render() {
     push();
     image(airplaneLoad, this.x - 230, this.y - 120);
-    tint(255);
     pop();
   }
 
   control() {
     if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
-      this.x -= 20;
+      this.x -= 15;
     } else if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
-      this.x += 20;
+      this.x += 15;
     } else if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
-      this.y -= 20;
+      this.y -= 15;
     } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
-      this.y += 20;
+      this.y += 15;
     }
   }
 
-  hits(primitive) {
+  hits(bomb) {
     return collideRectRect(
       this.x - 150,
       this.y - 40,
       150,
       80,
-      primitive.x,
-      primitive.y,
-      50,
-      50
+      bomb.x,
+      bomb.y,
+      90,
+      35
     );
   }
 }

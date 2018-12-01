@@ -28,6 +28,7 @@ function Foreground() {
 
   //Score
   textFont(fontBold);
-  text(`Score: ${score}`, width - 150, 30);
+  textSize(32);
+  text(`Score: ${score}`, width - 150, 35);
   pop();
 }

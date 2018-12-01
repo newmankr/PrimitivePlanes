@@ -1,4 +1,4 @@
-# Primitive Planes
+<p align="center"><img width=60% src="https://github.com/newmankr/PrimitivePlanes/blob/master/images/logo.png"></p>
 
 <p align="center"> 
 <a href="https://p5js.org/"><img src="https://forthebadge.com/images/badges/made-with-javascript.svg"></a>
@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <strong>Primitive Planes</strong> is a processing game using javascript that aims to bring Calculus primitives problems to a fun and challenging airplane gameplay. Your objective is to destroy the maximum amount of primitives to reach a new level. 
+  <strong>Primitive Planes</strong> is a processing game using javascript that aims to bring a fun and challenging airplane gameplay. Your objective is to destroy the maximum amount of bombs to reach a new level. 
 </p>
 
 ## 🎮 How to play

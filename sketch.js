@@ -1,14 +1,22 @@
 var backgroundLoad;
+var mainmenuLoad;
+var gameoverLoad;
+var winLoad;
 var airplaneLoad;
 var bulletLoad;
+var bombLoad;
 var fontBold;
 var screen;
 
 function preload() {
   backgroundLoad = loadImage("images/background.png");
-  airplaneLoad = loadImage("images/airplane/airplane1.png");
-  bulletLoad = loadImage("images/airplane/bullet1.png");
-  fontBold = loadFont("fonts/RifficFree-Bold.ttf");
+  mainmenuLoad = loadImage("images/mainmenu.png");
+  gameoverLoad = loadImage("images/gameover.png");
+  winLoad = loadImage("images/win.png");
+  airplaneLoad = loadImage("images/airplane.png");
+  bulletLoad = loadImage("images/bullet.png");
+  bombLoad = loadImage("images/bomb.png");
+  fontBold = loadFont("fonts/Rainbow.ttf");
 }
 
 function setup() {
@@ -23,10 +31,10 @@ function setup() {
 function reset() {
   life = ["❤", "❤", "❤", "❤", "❤"];
   score = 0;
-  primitives = [];
+  bombs = [];
 
   for (let i = 0; i < 5; i++) {
-    primitives.push(new Primitive());
+    bombs.push(new Bomb());
   }
 }
 
@@ -52,7 +60,15 @@ function draw() {
     screen = 4;
   }
 
-  if (score >= 5000) {
+  if (score >= 1000 && score < 2000) {
+    bvelocity = 3;
+  } else if (score >= 2000 && score < 3000) {
+    bvelocity = 4;
+  } else if (score >= 3000 && score < 4000) {
+    bvelocity = 6;
+  } else if (score >= 4000 && score < 5000) {
+    bvelocity = 10;
+  } else if (score >= 5000) {
     screen = 3;
   }
 }
@@ -61,12 +77,7 @@ function mainMenu() {
   push();
   screen = 1;
   background(3, 169, 244);
-  fill(255);
-  textFont(fontBold);
-  textSize(64);
-  textAlign(CENTER);
-  text("Primitive\nPlanes", 600, 250);
-  text("Press ENTER to play!", 600, 500);
+  image(mainmenuLoad, 0, 0, windowWidth, windowHeight);
   pop();
 }
 
@@ -83,10 +94,10 @@ function newLevel() {
       bullets[i].render();
       bullets[i].movement();
 
-      for (let j = primitives.length - 1; j >= 0; j--) {
-        if (bullets[i].edges(primitives[j])) {
+      for (let j = bombs.length - 1; j >= 0; j--) {
+        if (bullets[i].edges(bombs[j])) {
           score += 100;
-          primitives.splice(j, 1);
+          bombs.splice(j, 1);
           bullets.splice(i, 1);
           break;
         }
@@ -94,22 +105,22 @@ function newLevel() {
     }
   }
 
-  if (primitives.length == 1) {
+  if (bombs.length == 1) {
     for (let i = 0; i < 5; i++) {
-      primitives.push(new Primitive());
+      bombs.push(new Bomb());
     }
   }
 
-  for (let i = primitives.length - 1; i >= 0; i--) {
-    primitives[i].render(i);
-    primitives[i].movement(i);
-    if (primitives[i].x < -100) {
-      primitives.splice(i, 1);
+  for (let i = bombs.length - 1; i >= 0; i--) {
+    bombs[i].render();
+    bombs[i].movement();
+    if (bombs[i].x < -100) {
+      bombs.splice(i, 1);
       life.pop();
     }
-    for (let j = primitives.length - 1; j >= 0; j--) {
-      if (airplane.hits(primitives[j])) {
-        primitives.splice(j, 1);
+    for (let j = bombs.length - 1; j >= 0; j--) {
+      if (airplane.hits(bombs[j])) {
+        bombs.splice(j, 1);
         life.pop();
       }
     }
@@ -119,25 +130,14 @@ function newLevel() {
 function win() {
   push();
   background(3, 169, 244);
-  fill(255);
-  textFont(fontBold);
-  textSize(64);
-  text("YOU WON!", 400, 250);
-  text(`Score: ${score}`, 400, 350);
-  textSize(32);
-  text("Press ENTER to play again!", 360, 450);
+  image(winLoad, 0, 0, windowWidth, windowHeight);
   pop();
 }
 
 function gameOver() {
   push();
   background(200, 0, 0);
-  fill(255);
-  textFont(fontBold);
-  textSize(64);
-  text("GAME OVER", 400, 250);
-  textSize(32);
-  text("Press ENTER to play again.", 400, 400);
+  image(gameoverLoad, 0, 0, windowWidth, windowHeight);
   pop();
 }
 
